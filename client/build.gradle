@@ -1,0 +1,44 @@
+plugins {
+    id 'java'
+}
+
+apply plugin: 'application'
+
+group 'sample'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+mainClassName = 'UploadFile'
+applicationDefaultJvmArgs = ["-Dgreeting.language=en"]
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'org.apache.httpcomponents:httpclient:4.5.6'
+    compile 'org.apache.httpcomponents:httpmime:4.5.6'
+
+    compile 'org.apache.commons:commons-lang3:3.1'
+    compile 'org.apache.commons:commons-compress:1.14'
+    compile 'net.harawata:appdirs:1.0.1'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.google.guava:guava:24.0-jre'                   // Stopwatch for TimeUtils
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'UploadFile'
+    }
+}
+
+task createDocs {
+    def docs = file("$buildDir/docs")
+    outputs.dir docs
+    doLast {
+        docs.mkdirs()
+        new File(docs, "readme.txt").write("Read me!")
+    }
+}
